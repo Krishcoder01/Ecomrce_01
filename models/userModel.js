@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Joi = require('joi');
 
 
@@ -44,7 +43,8 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 
-const userValidator = Joi.object({
+function userValidator (data){
+let schema = Joi.object({
     name: Joi.string().trim().required().messages({
         'string.empty': 'Name is required'
     }),
@@ -61,7 +61,11 @@ const userValidator = Joi.object({
         'string.empty': 'Password is required'
     }),
     isAdmin: Joi.boolean().optional()
-});
+})
+ let {error} = schema.validate() ;
+ return error ;
+
+};
 
 
 const User = mongoose.model('users', userSchema);
