@@ -33,4 +33,24 @@ async function signupHandler  (req , res , next){
     }
 }
 
-module.exports = {signupHandler}
+async function loginHandler (req , res , next){
+    try {
+        const {email , password} = req.body;
+        if( email== undefined || password== undefined  )
+            return res.status(200).send("all details are required");
+
+        const user = await userModel.findOne({email : email});
+        if(!user) return res.status(400).send('User not registered');
+
+        const validPassword = await bcrypt.compare(password , user.password);
+
+        if(!validPassword) return res.status(400).send('Invalid email or password');
+
+        res.send('Login sucessfull')
+        
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {signupHandler , loginHandler}
