@@ -1,5 +1,6 @@
 const {userModel , userValidator} = require('../models/userModel');
 const bcrypt = require('bcrypt')
+const Jwt = require('jsonwebtoken');
 
 
 
@@ -21,12 +22,19 @@ async function signupHandler  (req , res , next){
     const  error = await userValidator({email , name , phone , password , isAdmin});
     if (error) return res.status(400).send(error);
 
-    await userModel.create({
+    let  newUser = await userModel.create({
         email ,
         name,
         phone ,
         password : hashPassword
-    }).then(res.send("User created sucessfully"))
+    });
+
+    let token = await Jwt.sign({id : newUser._id , email : newUser.email , isAdmin : newUser.isAdmin} , process.env.JWT_SECRET , {expiresIn : '1h'}) ;
+
+    
+    res.cookie('token' , token , {httpOnly : true , maxAge : 1000*60*60});
+    
+    res.send("User created sucessfully")
         
     } catch (error) {
         next(error)
@@ -34,7 +42,11 @@ async function signupHandler  (req , res , next){
 }
 
 async function loginHandler (req , res , next){
+
     try {
+
+        if(req.cookies?.token) return res.status(400).send('User already logged in');
+
         const {email , password} = req.body;
         if( email== undefined || password== undefined  )
             return res.status(200).send("all details are required");
@@ -45,9 +57,14 @@ async function loginHandler (req , res , next){
         const validPassword = await bcrypt.compare(password , user.password);
 
         if(!validPassword) return res.status(400).send('Invalid email or password');
+         
+
+        let token = await Jwt.sign({id : user._id , email : user.email , isAdmin : user.isAdmin} , process.env.JWT_SECRET , {expiresIn : '1h'}) ;
+        res.cookie('token' , token , {httpOnly : true , maxAge : 1000*60*60});
+        
 
         res.send('Login sucessfull')
-        
+
     } catch (error) {
         next(error)
     }
