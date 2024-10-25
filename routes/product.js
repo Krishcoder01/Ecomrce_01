@@ -7,7 +7,9 @@ const {isAdmin , isLoggedIn} = require('../middlewares/auth');
 router.get('/' , isLoggedIn , getProducts)
 .post('/' , isAdmin , createProduct);
 
-router.get('/:id' , isLoggedIn ,getProductById).post('/:id' , isAdmin , updateProduct)
+router.get('/:id' , isLoggedIn ,getProductById)
+
+router.post('/:id' , isAdmin , updateProduct)
 
 router.delete('/:id/delete' , isAdmin , deleteProduct);
 

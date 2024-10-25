@@ -27,7 +27,7 @@ async function getProducts (req , res , next){
     }
 }
 
-async function getProduct (req , res , next){
+async function getProductById (req , res , next){
     try {
         let product = await productModel.findById(req.params.id);
         if(!product) return res.status(404).send("Product not found");
@@ -65,5 +65,5 @@ async function deleteProduct (req , res , next){
     }
 }
 
-module.exports = { createProduct , getProducts , getProduct , updateProduct , deleteProduct };
+module.exports = { createProduct , getProducts , getProductById , updateProduct , deleteProduct };
 

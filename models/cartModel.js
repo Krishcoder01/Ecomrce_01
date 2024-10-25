@@ -1,4 +1,4 @@
-const mogoose = require('mongoose');
+const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const cartSchema = new mongoose.Schema({
@@ -29,7 +29,8 @@ const cartSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 
-const cartValidator = Joi.object({
+function cartValidator(){
+    let schema = Joi.object({
     user: Joi.string()
         .required()
         .custom((value, helpers) => {
@@ -57,7 +58,11 @@ const cartValidator = Joi.object({
     totalPrice: Joi.number()
         .min(0)
         .optional()
-});
+})
+
+let {error} = schema.validate(data);
+return error ;
+};
 
 const Cart = mongoose.model('carts', cartSchema);
 
