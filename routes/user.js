@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {signupHandler , loginHandler ,adminLoginHandler , adminSignupHandler} = require('../controller/userController');
+const {signupHandler , loginHandler ,adminLoginHandler , adminSignupHandler , logoutHandler} = require('../controller/userController');
 
 
 router.get('/signup' , (req , res)=>{
@@ -8,16 +8,21 @@ router.get('/signup' , (req , res)=>{
 }
 ).post('/signup' , signupHandler) ;
 
+
 router.get('/login' , (req , res)=>{
     res.render('login');
 }
 ).post('/login' , loginHandler);
+
+router.post('/logout' , logoutHandler)
 
 router.get('/admin' , (req , res)=>{
     res.render('adminLogin');
 }
 ).post('/admin' , adminLoginHandler) ;
 
+
 router.post('/admin/create' , adminSignupHandler )
+
 
 module.exports = router;

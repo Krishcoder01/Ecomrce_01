@@ -133,5 +133,14 @@ async function adminSignupHandler (req , res , next){
     }
 }
 
+async function logoutHandler (req , res , next){
+    try {
+        res.clearCookie('token');
+        res.send('Logout sucessfull')
+    } catch (error) {
+        next(error)
+    }
+    
+}
 
-module.exports = {signupHandler , loginHandler , adminLoginHandler , adminSignupHandler} ;
+module.exports = {signupHandler , loginHandler , adminLoginHandler , adminSignupHandler , logoutHandler} ;
