@@ -4,6 +4,7 @@ const dbSetup = require('./config/dbSetup');
 require('dotenv').config();
 const userRouter = require('./routes/user');
 const productRouter = require('./routes/product');
+const cartRouter = require('./routes/cart');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
@@ -21,6 +22,8 @@ dbSetup();
 app.use('/user', userRouter);
 
 app.use('/product', productRouter);
+
+app.use('/cart', cartRouter);
 
 
 
