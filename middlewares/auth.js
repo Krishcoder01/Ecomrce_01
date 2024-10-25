@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-module.exports.isLogginIn = (req, res, next) => {
+module.exports.isLoggedIn = (req, res, next) => {
+    
     try {
         let token = req.cookies.token;
-    if (token) {
+        if (token) {
         const user = jwt.verify(token, process.env.JWT_SECRET);
         req.user = user;
         return next();
@@ -21,7 +22,8 @@ module.exports.isAdmin = (req, res, next) => {
         let token = req.cookies.token;
     if (token) {
         const user = jwt.verify(token, process.env.JWT_SECRET);
-        if (user.role === 'admin') {
+        console.log(user)
+        if (user.isAdmin) {
             req.user = user;
             return next();
         } else {
@@ -34,4 +36,6 @@ module.exports.isAdmin = (req, res, next) => {
         next(error);
     }
 }
+
+
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {signupHandler , loginHandler ,adminLoginHandler , adminSignupHandler , logoutHandler} = require('../controller/userController');
+const { isAdmin} = require('../middlewares/auth');
 
 
 router.get('/signup' , (req , res)=>{
@@ -16,7 +17,7 @@ router.get('/login' , (req , res)=>{
 
 router.post('/logout' , logoutHandler)
 
-router.get('/admin' , (req , res)=>{
+router.get('/admin'  , (req , res)=>{
     res.render('adminLogin');
 }
 ).post('/admin' , adminLoginHandler) ;

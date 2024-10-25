@@ -3,8 +3,12 @@ const app = express();
 const dbSetup = require('./config/dbSetup');
 require('dotenv').config();
 const userRouter = require('./routes/user');
+const productRouter = require('./routes/product');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
+
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -15,6 +19,8 @@ dbSetup();
 
 
 app.use('/user', userRouter);
+
+app.use('/product', productRouter);
 
 
 

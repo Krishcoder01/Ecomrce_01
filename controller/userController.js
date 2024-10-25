@@ -8,7 +8,7 @@ async function signupHandler  (req , res , next){
     try {
         const {email , name , phone , password , isAdmin} = req.body;
 
-    if( email== undefined || name == undefined || phone== undefined||password== undefined  )
+    if( email == undefined || name == undefined || phone== undefined || password== undefined  )
         return res.status(200).send("all details are required");
 
     const user = await userModel.findOne({email : email});
@@ -143,4 +143,9 @@ async function logoutHandler (req , res , next){
     
 }
 
-module.exports = {signupHandler , loginHandler , adminLoginHandler , adminSignupHandler , logoutHandler} ;
+
+
+
+module.exports = {
+    signupHandler , loginHandler , adminLoginHandler , adminSignupHandler , logoutHandler
+} ;
