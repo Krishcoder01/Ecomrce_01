@@ -6,6 +6,7 @@ const userRouter = require('./routes/user');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
+const paymentRouter = require('./routes/payment');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
@@ -27,6 +28,8 @@ app.use('/product', productRouter);
 app.use('/cart', cartRouter);
 
 app.use('/order' , orderRouter);
+
+app.use('/payment' , paymentRouter);
 
 
 
