@@ -42,7 +42,9 @@ const orderSchema = new mongoose.Schema({
 });
 
 
-const orderValidator = Joi.object({
+function orderValidator(data){
+
+let schema = Joi.object({
     orderItems: Joi.array().items(Joi.object({
         name: Joi.string().required(),
         qty: Joi.number().min(1).required().messages({
@@ -78,7 +80,10 @@ const orderValidator = Joi.object({
         return value;
     }),
     totalPrice: Joi.number().min(0).required()
-});
+})
+let {error} = schema.validate(data);
+return error ? error.details[0].message : null;
+};
 
 
 const Order = mongoose.model('orders', orderSchema);

@@ -23,7 +23,15 @@ router.get('/admin'  , (req , res)=>{
 ).post('/admin' , adminLoginHandler) ;
 
 
-router.post('/admin/create' , adminSignupHandler )
+router.get('/admin/create'  , (req , res)=>{
+    res.render('adminSignup');
+}
+).post('/admin/create' , adminSignupHandler )
+
+
+router.get('/admin/dashboard' , isAdmin , (req , res)=>{
+    res.render('adminDashboard');
+}) ;
 
 
 module.exports = router;

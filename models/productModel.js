@@ -23,13 +23,14 @@ const productSchema = new mongoose.Schema({
         min: [0, 'Stock quantity cannot be negative']
     },
     image: {
-        type: Buffer, // You may want to change this to store image URLs
+        type: String, // You may want to change this to store image URLs
     }
 }, {timestamps: true});
 
 
 
-const productValidator = Joi.object({
+function productValidator(data){
+    let schema = Joi.object({
     name: Joi.string().trim().required().messages({
         'string.empty': 'Product name is required'
     }),
@@ -47,7 +48,12 @@ const productValidator = Joi.object({
         'any.required': 'Stock quantity is required'
     }),
     image: Joi.any().optional() // Assuming you're handling image uploads separately
-});
+})
+
+let { error } = schema.validate(data);
+return error ;
+
+};
 
 
 

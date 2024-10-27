@@ -31,7 +31,8 @@ const paymentSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const transactionValidator = Joi.object({
+function transactionValidator(data){
+    let schema = Joi.object({
     transactionID: Joi.string().trim().messages({
         'string.empty': 'Transaction ID is required',
         'any.required': 'Transaction ID is required'
@@ -53,7 +54,10 @@ const transactionValidator = Joi.object({
         'string.empty': 'Signature is required',
         'any.required': 'Signature is required'
     })
-});
+})
+ let {error} = schema.validate(data);
+ return error ? error.details[0].message : null;
+};
 
 
 const Payment = mongoose.model('payments', paymentSchema);

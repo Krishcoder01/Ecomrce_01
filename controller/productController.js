@@ -2,17 +2,17 @@ const {productModel , productValidator } = require('../models/productModel');
 
 async function createProduct (req , res , next){
     try {
-        const {name , price , category , description , quantityStock , image} = req.body;
-        if( name == undefined || price == undefined || category == undefined || description == undefined || quantityStock == undefined || image == undefined )
+        const {name , price , description , quantityStock , image} = req.body;
+        if( name == undefined || price == undefined  || description == undefined || quantityStock == undefined || image == undefined )
             return res.status(200).send("all details are required");
         
-        const error = await productValidator({name , price , category , description , quantityStock , image});
+        const error = await productValidator({name , price  , description , quantityStock , image});
         if(error) return res.status(400).send(error);
         
         let newProduct = await productModel.create({
-            name , price , category , description , quantityStock , image
+            name , price , description , quantityStock , image
         });
-        res.json(newProduct);
+        res.redirect('back');
     } catch (error) {
         next(error);
     }
@@ -56,10 +56,12 @@ async function updateProduct (req , res , next){
 }
 
 async function deleteProduct (req , res , next){
+    console.log(req.body.idey);
     try {
-        let product = await productModel.findByIdAndDelete(req.params.id);
+      
+        let product = await productModel.findByIdAndDelete(req.body.idey);
         if(!product) return res.status(404).send("Product not found");
-        res.json(product);
+        res.redirect('back');
     } catch (error) {
         next(error);
     }

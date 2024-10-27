@@ -74,7 +74,7 @@ async function adminLoginHandler (req , res , next){
     try {
         if(req.cookies?.token) return res.status(400).send('User already logged in');
         const {email , password} = req.body;
-        if( email== undefined || password== undefined  )
+        if( email== undefined || password== undefined )
             return res.status(200).send("all details are required");
 
         const user = await userModel.findOne({email : email});
@@ -88,7 +88,7 @@ async function adminLoginHandler (req , res , next){
         let token = await Jwt.sign({id : user._id , email : user.email , isAdmin : user.isAdmin} , process.env.JWT_SECRET , {expiresIn : '1h'}) ;
         res.cookie('token' , token , {httpOnly : true , maxAge : 1000*60*60});
         
-        res.send('Admin Login sucessfull')
+        res.redirect('/user/admin/dashboard')
         
     } catch (error) {
         next(error)

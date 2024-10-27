@@ -11,6 +11,6 @@ router.get('/:id' , isLoggedIn ,getProductById)
 
 router.post('/:id' , isAdmin , updateProduct)
 
-router.delete('/:id/delete' , isAdmin , deleteProduct);
+router.post('/delete' , isAdmin , deleteProduct);
 
 module.exports = router;

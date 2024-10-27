@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body>
+     <div class="topbar px-14 h-[13vh] p-4  w-full">
+        <img src="/images/Logo.svg" alt="">
+     </div>
+     <div class="px-14 w-full h-[87vh] flex py-7">
+        <div class="leftform w-[44%] h-[80vh]">
+            <div class="w-full h-full p-3   ">
+                <div class="form  w-full h-full bg-[#fafafa] rounded-2xl">
+                    <div class=" ml-4 p-4">
+                        <form action="/product" method="post">
+                            <div class="form-group flex flex-col">
+                                <label for="name " class="pb-3 font-semibold">Name</label>
+                                <input type="text" name="name" id="name" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                            </div>
+                            <div class="form-group flex flex-col">
+                                <label for="price " class="pb-3 font-semibold pt-4">Price</label>
+                                <input type="number" name="price" id="price" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                            </div>
+                            <div class="form-group flex flex-col">
+                                <label for="description" class="pb-3 font-semibold pt-4">Description</label>
+                                <input type="text" name="description" id="description" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                            </div>
+                            <div class="form-group  flex flex-col">
+                                <label for="quantity" class="pb-3 font-semibold pt-4">Quantity</label>
+                                <input type="number" name="quantityStock" id="quantity" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                            </div>
+                            <div class="form-group  flex flex-col">
+                                <label for="image" class="pb-3 font-semibold pt-4">Image Url</label>
+                                <input type="text" name="image" id="image" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                            </div>
+                            <div class="form-group flex mt-10 justify-between w-full  ">
+                                <button type="submit" class="p-4 flex ml-[5vh] font-semibold bg-black px-24 rounded-2xl text-white hover:scale-90">Add New Product</button>
+                            </div>    
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right w-[50%] h-[70vh]">
+            <div class="form  w-full h-[40%] bg-[#fafafa] rounded-2xl">
+                <div class=" ml-4 p-4">
+                    <form action="/product/delete" method="post">
+                        <div class="form-group flex flex-col">
+                            <label for="idey" class="pb-3 font-semibold">Delete Product By Id</label>
+                            <input type="text" name="idey" id="idey" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                        </div>
+                       
+                        <div class="form-group flex mt-10 justify-between w-full  ">
+                            <button type="submit" class="p-4 flex ml-[5vh] font-semibold bg-black px-24 rounded-2xl text-white hover:scale-90" > Delete Product</button>
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div>
+    
+</body>
+</html>
