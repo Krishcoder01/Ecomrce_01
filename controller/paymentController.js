@@ -27,7 +27,7 @@ async function createPayment(req , res , next){
 
 async function verifyPayment(req , res , next){
     const { razorpayOrderId , razorpayPaymentId , signature } = req.body;
-    const secret = process.env.RAZORPAY_KEY_SECRET
+    const secret = process.env.RAZORPAY_KEY_SECRET ;
   
     try {
      

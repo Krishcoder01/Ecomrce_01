@@ -76,4 +76,4 @@ async function getOrderById (req , res , next){
 
 
 
-module.exports = { getOrder , createOrder , getOrderById  }
+module.exports = { getOrder  , getOrderById  }

@@ -15,7 +15,7 @@ router.get('/login' , (req , res)=>{
 }
 ).post('/login' , loginHandler);
 
-router.post('/logout' , logoutHandler)
+router.get('/logout' , logoutHandler)
 
 router.get('/admin'  , (req , res)=>{
     res.render('adminLogin');
