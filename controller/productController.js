@@ -56,10 +56,8 @@ async function updateProduct (req , res , next){
 }
 
 async function deleteProduct (req , res , next){
-    console.log(req.body.idey);
     try {
-      
-        let product = await productModel.findByIdAndDelete(req.body.idey);
+        let product = await productModel.findByIdAndDelete({_id : req.body.idey });
         if(!product) return res.status(404).send("Product not found");
         res.redirect('back');
     } catch (error) {

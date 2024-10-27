@@ -22,7 +22,7 @@ module.exports.isAdmin = (req, res, next) => {
         let token = req.cookies.token;
     if (token) {
         const user = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(user)
+        // console.log(user)
         if (user.isAdmin) {
             req.user = user;
             return next();
