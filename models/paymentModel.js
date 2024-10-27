@@ -4,7 +4,6 @@ const Joi = require('joi');
 const paymentSchema = new mongoose.Schema({
     transactionID: {
         type: String,
-        required: [true, 'Transaction ID is required'],
         trim: true
     },
     amount: {
@@ -24,13 +23,16 @@ const paymentSchema = new mongoose.Schema({
     },
     signature: {
         type: String,
-        required: [true, 'Signature is required'],
         trim: true
+    },
+    currency: {
+        type: String,
+        default: 'INR'
     }
 }, { timestamps: true });
 
 const transactionValidator = Joi.object({
-    transactionID: Joi.string().trim().required().messages({
+    transactionID: Joi.string().trim().messages({
         'string.empty': 'Transaction ID is required',
         'any.required': 'Transaction ID is required'
     }),
@@ -47,7 +49,7 @@ const transactionValidator = Joi.object({
         'string.empty': 'Order ID is required',
         'any.required': 'Order ID is required'
     }),
-    signature: Joi.string().trim().required().messages({
+    signature: Joi.string().trim().messages({
         'string.empty': 'Signature is required',
         'any.required': 'Signature is required'
     })
