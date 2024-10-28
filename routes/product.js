@@ -9,8 +9,8 @@ router.get('/' , isLoggedIn , getProducts)
 
 router.get('/:id' , isLoggedIn ,getProductById)
 
-router.post('/:id' , isAdmin , updateProduct)
+router.post('/update/:id' , isAdmin , updateProduct)
 
-router.post('/delete' , isAdmin , deleteProduct);
+router.post('/remove' , deleteProduct);
 
 module.exports = router;

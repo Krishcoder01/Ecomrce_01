@@ -1,4 +1,5 @@
 const {userModel , userValidator} = require('../models/userModel');
+const {productModel} = require('../models/productModel');
 const bcrypt = require('bcrypt')
 const Jwt = require('jsonwebtoken');
 
@@ -33,8 +34,10 @@ async function signupHandler  (req , res , next){
 
     
     res.cookie('token' , token , {httpOnly : true , maxAge : 1000*60*60});
+
+    const produscts = await productModel.find({});
     
-    res.send("User created sucessfully")
+    res.redirect('/user/home')
         
     } catch (error) {
         next(error)
@@ -62,8 +65,8 @@ async function loginHandler (req , res , next){
         let token = await Jwt.sign({id : user._id , email : user.email , isAdmin : user.isAdmin} , process.env.JWT_SECRET , {expiresIn : '1h'}) ;
         res.cookie('token' , token , {httpOnly : true , maxAge : 1000*60*60});
         
-
-        res.send('Login sucessfull')
+        const produscts = await productModel.find({});
+        res.redirect('/user/home')
 
     } catch (error) {
         next(error)

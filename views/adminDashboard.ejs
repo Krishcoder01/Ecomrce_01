@@ -10,11 +10,11 @@
      <div class="topbar px-14 h-[13vh] p-4  w-full">
         <img src="/images/Logo.svg" alt="">
      </div>
-     <div class="px-14 w-full h-[87vh] flex py-7">
-        <div class="leftform w-[44%] h-[80vh]">
-            <!-- <div class="w-full h-full p-3   ">
-                <div class="form  w-full h-full bg-[#fafafa] rounded-2xl">
-                    <div class=" ml-4 p-4">
+     <div class="px-14 w-full h-[87vh] flex py-7 gap-4">
+        <div class="leftform mr-3 w-[44%] h-[80vh]">
+            <div class="w-full h-full   ">
+                <div class="form  w-[90%] h-full bg-[#fafafa] rounded-2xl">
+                    <div class="  p-4">
                         <form action="/product" method="post">
                             <div class="form-group flex flex-col">
                                 <label for="name " class="pb-3 font-semibold">Name</label>
@@ -42,15 +42,15 @@
                         </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="right w-[50%] h-[70vh]">
-            <div class="form  w-full h-[40%] bg-[#fafafa] rounded-2xl">
-                <div class=" ml-4 p-4">
-                    <form action="/product/delete" method="post">
+            <div class="form  w-full h-[40%]  mb-2 bg-[#fafafa] rounded-2xl">
+                <div class=" p-4">
+                    <form action="/product/remove/"  method="post" enctype="application/x-www-form-urlencoded">
                         <div class="form-group flex flex-col">
-                            <label for="idey" class="pb-3 font-semibold">Delete Product By Id</label>
-                            <input type="text" name="idey" id="idey" class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
+                            <label for="idey" class="pb-3 font-semibold" >Delete Product By Id</label>
+                            <input type="text" name="idey"  class="w-[70%] rounded-lg p-3 bg-[#ffff] border-[1px] border-[#EDEDED] " required>
                         </div>
                        
                         <div class="form-group flex mt-10 justify-between w-full  ">
@@ -58,6 +58,11 @@
                         </div>    
                     </form>
                 </div>
+            </div>
+            <div class="counter h-[30%] mt-6 rounded-2xl bg-[#fafafa] w-full">
+                <h1 class="font-bold text-2xl pl-5 pt-6">Total Products In Inventory - </h1>
+                <h1 class="pl-5 pt-4 text-6xl font-semibold">250</h1>
+
             </div>
         </div>
      </div>

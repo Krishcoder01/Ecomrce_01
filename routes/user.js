@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const {signupHandler , loginHandler ,adminLoginHandler , adminSignupHandler , logoutHandler} = require('../controller/userController');
-const { isAdmin} = require('../middlewares/auth');
+const { isAdmin , isLoggedIn} = require('../middlewares/auth');
+const {productModel} = require('../models/productModel');
 
+
+router.get('/home' ,isLoggedIn, async (req , res)=> {
+    const produscts = await productModel.find({});
+    res.render('userHome' , {produscts});
+}
+);
 
 router.get('/signup' , (req , res)=>{
     res.render('signup');
