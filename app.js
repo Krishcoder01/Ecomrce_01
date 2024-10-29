@@ -9,6 +9,7 @@ const orderRouter = require('./routes/order');
 const paymentRouter = require('./routes/payment');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const {isLoggedIn , isAdmin}=require('./middlewares/auth')
 
 
 app.use(cookieParser());
@@ -26,7 +27,7 @@ app.use('/user', userRouter);
 
 app.use('/product', productRouter);
 
-app.use('/cart', cartRouter);
+app.use('/cart', isLoggedIn ,cartRouter);
 
 app.use('/order' , orderRouter);
 

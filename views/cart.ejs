@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/output.css">
+</head>
+<body>
+    <div class="main  w-full h-full px-[5vh] py-2">
+        <div class="topbar w-full h-[8vh]  flex justify-between items-center ">
+            <div class="logo">
+                <img src="../images/Logo.svg" alt="">
+            </div>
+            <div class="flex justify-evenly gap-16 items-center">
+                <a href="/user/home" class="font-semibold">Home</a>
+                <a href="">About</a>
+                <a href="">Contact</a>
+            </div>
+            <div class="w-[10%] gap-10 flex  right-0" >
+                <a href="/user/logout"><img src="../images/UserLogo.svg" alt=""></a>
+            </div>
+        </div>
+        <div class="main2 min-h-[70vh]  w-full py-8 px-8">
+            <h1 class="font-bold text-2xl mb-7">Shooping Cart</h1>
+            <div class="submain flex gap-4">
+                <div class="left w-[60%] min-h-[10vh]  rounded-xl px-7">
+                    <% cart.forEach(element => { %>
+                       <% element.products.forEach(eleme => { %>
+                        <div class="w-full flex justify-between   items-center h-[10vh] ">
+                            <div class="w-[10vh] h-[10vh] rounded-xl overflow-hidden bg-black">
+                                <img src="<%=  eleme.productId.image  %>" alt="">
+                            </div>
+                            <div class="w-[70%] text-left">
+                                <h1 class="font-medium text-xl"><%= eleme.productId.name  %></h1>
+                            </div>
+                            <div>
+                                <h1 class="font-medium text-xl"><%= eleme.productId.price  %></h1>
+                                <h1>X  <%= eleme.quantity  %></h1>
+                            </div>
+                        </div>
+                        <hr class="border-zinc-400 border-dashed  border-b-[1px] mt-5 mb-5">
+                       <% }) %>
+                    <% }) %>
+
+                </div>
+                <div class="right w-[35%] h-[65vh]  bg-black rounded-xl"></div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

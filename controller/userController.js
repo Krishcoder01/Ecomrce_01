@@ -139,7 +139,7 @@ async function adminSignupHandler (req , res , next){
 async function logoutHandler (req , res , next){
     try {
         res.clearCookie('token');
-        res.send('Logout sucessfull')
+        res.redirect('/user/login')
     } catch (error) {
         next(error)
     }

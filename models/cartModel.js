@@ -6,7 +6,6 @@ const cartSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
         required: true,
-        index: true  // Optimized for querying by user
     },
     products: [{
         productId: {
@@ -50,7 +49,6 @@ function cartValidator(){
             }),
         quantity: Joi.number()
             .min(1)
-            .required()
             .messages({
                 'number.min': 'Quantity must be at least 1'
             })
