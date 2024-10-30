@@ -44,10 +44,96 @@
                     <% }) %>
 
                 </div>
-                <div class="right w-[35%] h-[65vh]  bg-black rounded-xl"></div>
+                <div class="right w-[35%] h-[54vh] p-8 flex flex-col pt-10
+                 gap-6 border-[1px] border-dashed border-zinc-400 rounded-xl">
+                        <div class="div flex justify-between items-center">
+                            <h1 class="font-medium text-xl text-zinc-400 ">Sub Total</h1>
+                            <h1 class="font-medium text-xl "><% cart.forEach(element => { %>
+                             ₹ <%= element.totalPrice %>
+                            <% }) %></h1>
+                        </div>
+                        <div class="div flex justify-between items-center">
+                            <h1 class="font-medium text-xl text-zinc-400 ">Convineance Fee</h1>
+                            <h1 class="font-medium text-xl ">₹20</h1>
+                        </div>
+                        <div class="div flex justify-between items-center">
+                            <h1 class="font-medium text-xl text-zinc-400 ">Platform Charge</h1>
+                            <h1 class="font-medium text-xl ">₹10</h1>
+                        </div>
+                        <div class="div flex justify-between items-center">
+                            <h1 class="font-medium text-xl text-zinc-400 "> Total</h1>
+                            <h1 class="font-bold text-xl "><% cart.forEach(element => { %>
+                                ₹ <%= element.totalPrice + 20 + 10 %>
+                               <% }) %></h1>
+                        </div>
+                        <button id="paymentbtn" class="paymentbtn px-14 bg-black text-white font-bold py-4 rounded-lg mt-16">Place Order</button>
+                </div>
             </div>
         </div>
     </div>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            document.getElementById('paymentbtn').onclick = function(){
+                console.log("hello guys")
+            }
+        document.getElementById('paymentbtn').onclick = function(e) {
+            axios.post('/payment/order')
+              .then(function (response) {
+                var options = {
+                  "key": "rzp_test_cAa3gCF0eP8i4R", // Enter the Key ID generated from the Dashboard
+                  "amount": response.data.amount, // Amount in currency subunits. Default currency is INR.
+                  "currency": response.data.currency,
+                  "name": "Big Bee",
+                  "description": "Test Transaction",
+                  "image": "<https://example.com/your_logo>",
+                  "order_id": response.data.id,
+                  "handler": function(response) {
+                    axios.post('/payment/verify', {
+                      razorpayOrderId: response.razorpay_order_id,
+                      razorpayPaymentId: response.razorpay_payment_id,
+                      signature: response.razorpay_signature
+                    })
+                    .then(function (response) {
+                      alert('Payment verified successfully');
+                    })
+                    .catch(function (error) {
+                      console.error(error);
+                    });
+                  },
+                  "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9000090000"
+                  },
+                  "notes": {
+                    "address": "Razorpay Corporate Office"
+                  },
+                  "theme": {
+                    "color": "#3399cc"
+                  }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function(response) {
+                  alert('Payment Failed');
+                  alert('Error Code: ' + response.error.code);
+                  alert('Description: ' + response.error.description);
+                  alert('Source: ' + response.error.source);
+                  alert('Step: ' + response.error.step);
+                  alert('Reason: ' + response.error.reason);
+                  alert('Order ID: ' + response.error.metadata.order_id);
+                  alert('Payment ID: ' + response.error.metadata.payment_id);
+                });
+                rzp1.open();
+                e.preventDefault();
+              })
+              .catch(function (error) {
+                console.error(error);
+              });
+          };
+          </script>
     
 </body>
+
 </html>

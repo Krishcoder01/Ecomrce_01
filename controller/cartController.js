@@ -5,7 +5,7 @@ async function getCart (req , res , next){
     try {
         const user = req.user;
         let cart = await cartModel.find({user : user.id}).populate('products.productId');
-        console.log(cart.forEach( p => console.log(p.products)));
+        // console.log(cart.forEach( p => console.log(p.products)));
         res.render('cart' , {cart});
     } catch (error) {
         next(error);

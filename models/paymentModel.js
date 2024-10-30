@@ -13,13 +13,12 @@ const paymentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['success', 'failed'],
+        enum: ['success', 'pending' , 'failed'],
         required: [true, 'Status is required'],
     },
     orderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'orders',
-        required: [true, 'Order ID is required'],
     },
     signature: {
         type: String,
