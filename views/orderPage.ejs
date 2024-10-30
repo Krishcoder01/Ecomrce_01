@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/output.css">
+</head>
+<body>
+    <div class="main w-full h-full px-[5vh] py-2">
+        <div class="topbar w-full h-[8vh] mb-14  flex justify-between items-center ">
+            <div class="logo">
+                <img src="../images/Logo.svg" alt="">
+            </div>
+            <div class="flex justify-evenly gap-16 items-center">
+                <a href="/user/home" class="font-semibold">Home</a>
+                <a href="">About</a>
+                <a href="">Contact</a>
+                <a href="/order">Orders</a>
+            </div>
+            <div class="w-[10%] gap-10 flex  right-0" >
+                <a href="/cart"><img src="../images/Cart.svg" alt=""></a>
+                <a href="/user/logout"><img src="../images/UserLogo.svg" alt=""></a>
+            </div>
+        </div>
+        <% orders.forEach(element => { %>
+            <div class="btm min-h-[18vh]  w-full flex justify-center items-center flex-col">
+                <div class="box w-[70%] relative  px-[4vh] min-h-[14vh] p-4 bg-[#F6F6F6] rounded-2xl ">
+                    <h1 class="font-medium text-xl">Order Id : <%= element._id %></h1>
+                    <h1 class="font-medium text-lg mt-3">Total Price: ₹<%= element.totalPrice %></h1>
+                    <div class="absolute right-24 top-5 h-[3vh] w-[3vh] ">
+                        <h1 class="text-nowrap font-medium ">• In Progress</h1>
+                    </div>
+                </div>
+                
+            </div>
+        <% }) %>
+    </div>
+    
+</body>
+</html>

@@ -6,8 +6,9 @@ const { cartModel } = require('../models/cartModel');
 async function getOrder (req , res , next){
     try {
         let user = req.user ; 
-        let orders = await orderModel.find({ user : user._id });
-        res.json(orders);
+        let orders = await orderModel.find({ user : user.id });
+        // console.log(orders);
+        res.render('orderPage' , {orders});
     } catch (error) {
         next(error);
     }
@@ -51,7 +52,7 @@ async function createOrder (req , res , next){
     let productIds = cart.products.map((item => item.productId));
 
     let products = await productModel.find({_id : { $in : productIds }});
-    console.log(products)
+    // console.log(products)
     let order = new orderModel({
         paymentId : prepayment._id, 
         user : req.user.id,  
@@ -71,7 +72,7 @@ async function createOrder (req , res , next){
 
     await cartModel.findOneAndDelete({user : req.user.id});
 
-    console.log(" sab ho gaya r")
+    // console.log(" sab ho gaya r")
 
     return true ;
     // res.json({message : "Order created successfully" , order});
