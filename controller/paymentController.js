@@ -5,12 +5,12 @@ const razorpay = require('../config/razorPay');
 
 async function createPayment(req , res , next){
     const cart = await cartModel.findOne({ user: req.user.id });
-    console.log(cart);
+    // console.log(cart);
     const options = {
         amount: (cart.totalPrice + 20 + 10) * 100, // amount in smallest currency unit
         currency: "INR",
       };
-      console.log(options);
+      // console.log(options);
       try {
         const order = await razorpay.orders.create(options);
         // console.log(JSON.stringify(order) + "order");
@@ -29,7 +29,7 @@ async function createPayment(req , res , next){
               status: 'pending',
 
           })
-          console.log(newpayment + "newpayment");
+          // console.log(newpayment + "newpayment");
         
           res.send(order);
         }

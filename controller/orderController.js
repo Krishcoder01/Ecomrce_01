@@ -23,38 +23,68 @@ async function getOrderById (req , res , next){
     }
 }
 
-// async function createOrder (req , res , next){
+async function createOrder (req , res , next){
 
-//     let paymentDetails = await paymentModel.findOne({
-//         orderId: req.params.orderid,
-//       });
-  
-//       if (!paymentDetails) return res.send("Sorry, this order does not exist");
-//       if (
-//         req.params.signature === paymentDetails.signature &&
-//         req.params.paymentid === paymentDetails.paymentId
-//       ) {
-//         let cart = await cartModel.findOne({ user: req.params.userid });
-  
-//         await orderModel.create({
-//           orderId: req.params.orderid,
-//           user: req.params.userid,
-//           products: cart.products,
-//           totalPrice: cart.totalPrice,
-//           ,
-//           payment: paymentDetails._id,
-//         });
-//         res.redirect(`/map/${req.params.orderid}`);
-//       } else {
-//         res.send("invalid payment");
-//       }
-// }
+    // console.log("route pe ayaa")
+    // console.log(req.body.response.config + " aja aja")
+  try {
+    
+    const configData = JSON.parse(req.body.response.config.data);
+    // console.log(configData)
+    const razorpayOrderId = configData.razorpayPaymentId;
+    const signature = configData.signature;
+    // let { transactionId , signature } = req.body ;
+    // console.log( razorpayOrderId + " 1st " + signature)
+    const prepayment = await paymentModel.findOne({transactionID : razorpayOrderId , signature:signature});
+    // console.log(prepayment + "payment dhundha")
+    if(!prepayment) return res.status(400).send("Invalid transaction");
+    let cart = await cartModel.findOne({user : req.user.id});
+    // console.log(cart + "cart dhundha");
+    if(!cart) return res.status(400).send("Cart not found");
 
 
+    const productQuantities = {};
+    cart.products.forEach(item => {
+      productQuantities[item.productId.toString()] = item.quantity;
+    });
+
+    let productIds = cart.products.map((item => item.productId));
+
+    let products = await productModel.find({_id : { $in : productIds }});
+    console.log(products)
+    let order = new orderModel({
+        paymentId : prepayment._id, 
+        user : req.user.id,  
+        totalPrice : (prepayment.amount/100), 
+        orderItems : products.map(product => {
+                return {name : product.name,
+                qty : productQuantities[product._id.toString()],
+                image : product.image,
+                price : product.price,
+                product : product._id }
+        }),
+    });
+
+    await order.save();
+    await prepayment.updateOne({orderId : order._id})
+    await prepayment.save();
+
+    await cartModel.findOneAndDelete({user : req.user.id});
+
+    console.log(" sab ho gaya r")
+
+    return true ;
+    // res.json({message : "Order created successfully" , order});
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
 
 
 
-module.exports = { getOrder  , getOrderById  }
+
+
+module.exports = { getOrder  , getOrderById , createOrder  }

@@ -96,7 +96,12 @@
                       signature: response.razorpay_signature
                     })
                     .then(function (response) {
-                      alert('Payment verified successfully');
+                        console.log(response.config.data + " 1st")
+                        console.log(response.config.data.razorpayPaymentId + "2nd")
+                      let responsed = axios.post('/order/createOrder', { response})
+                      if(responsed){
+                        window.location.href = '/user/home';
+                      }
                     })
                     .catch(function (error) {
                       console.error(error);
@@ -129,7 +134,7 @@
                 e.preventDefault();
               })
               .catch(function (error) {
-                console.error(error);
+                console.error(error + "error");
               });
           };
           </script>
