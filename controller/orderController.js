@@ -11,7 +11,7 @@ async function getOrder (req , res , next){
           const formattedDate = new Date(order.createdAt).toLocaleDateString("en-GB");
           return { ...order.toObject(), createdAt: formattedDate };
       });
-        console.log(orders);
+        // console.log(orders);
         res.render('orderPage' , {orders});
     } catch (error) {
         next(error);
