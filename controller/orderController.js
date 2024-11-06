@@ -7,7 +7,11 @@ async function getOrder (req , res , next){
     try {
         let user = req.user ; 
         let orders = await orderModel.find({ user : user.id });
-        // console.log(orders);
+        orders = orders.map(order => {
+          const formattedDate = new Date(order.createdAt).toLocaleDateString("en-GB");
+          return { ...order.toObject(), createdAt: formattedDate };
+      });
+        console.log(orders);
         res.render('orderPage' , {orders});
     } catch (error) {
         next(error);
